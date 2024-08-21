@@ -6,6 +6,12 @@ export default {
   ],
   theme: {
     extend: {
+      borderRadius: {
+        '4xl': '2rem',
+      },
+      backgroundImage: {
+        hero: 'url("/src/assets/background.png")',
+      },
       fontFamily: {
         sans: 'Poppins, sans-serif',
         title: 'DM Sans, sans-serif',

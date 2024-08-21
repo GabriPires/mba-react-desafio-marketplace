@@ -8,6 +8,7 @@ export default {
     extend: {
       borderRadius: {
         '4xl': '2rem',
+        button: '10px',
       },
       backgroundImage: {
         hero: 'url("/src/assets/background.png")',

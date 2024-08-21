@@ -1,3 +1,5 @@
+import { Button } from '@/components/button'
+
 export function LoginPage() {
   return (
     <div className="bg-marketplace-shape-white m-6 rounded-4xl py-[72px] px-20 flex flex-col">
@@ -21,12 +23,12 @@ export function LoginPage() {
           <input type="password" id="password" name="password" />
         </div>
 
-        <button className="mt-12">Acessar</button>
+        <Button className="mt-12">Acessar</Button>
       </form>
 
       <div className="mt-auto flex flex-col">
         <span>Ainda não tem uma conta?</span>
-        <button>Cadastrar</button>
+        <Button variant="outline">Cadastrar</Button>
       </div>
     </div>
   )

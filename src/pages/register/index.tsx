@@ -13,13 +13,20 @@ import { Button } from '@/components/button'
 import * as Input from '@/components/input'
 import { phoneMask } from '@/utils/phone-mask'
 
-const registerFormSchema = z.object({
-  name: z.string().min(1, 'Insira seu nome'),
-  phone: z.string().min(1, 'Insira seu telefone'),
-  email: z.string().email('Insira um e-mail válido'),
-  password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
-  confirmPassword: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
-})
+const registerFormSchema = z
+  .object({
+    name: z.string().min(1, 'Insira seu nome'),
+    phone: z.string().min(1, 'Insira seu telefone'),
+    email: z.string().email('Insira um e-mail válido'),
+    password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
+    confirmPassword: z
+      .string()
+      .min(6, 'A senha deve ter no mínimo 6 caracteres'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'As senhas não coincidem',
+    path: ['confirmPassword'],
+  })
 
 type RegisterFormData = z.infer<typeof registerFormSchema>
 
@@ -135,7 +142,7 @@ export function RegisterPage() {
             </Input.Container>
           </Input.Control>
 
-          <Input.Control error={errors.password?.message}>
+          <Input.Control error={errors.confirmPassword?.message}>
             <Input.Label htmlFor="confirmPassword">Confirmar senha</Input.Label>
             <Input.Container>
               <Input.Icon icon={AccessIcon} />
@@ -162,7 +169,7 @@ export function RegisterPage() {
         </Button>
       </form>
 
-      <div className="mt-5 lg:mt-auto space-y-5">
+      <div className="mt-5 lg:mt-20 space-y-5">
         <span className="text-marketplace-gray-300">Já tem uma conta?</span>
         <Button
           variant="outline"

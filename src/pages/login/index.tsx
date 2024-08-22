@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { z } from 'zod'
 
 import { AccessIcon } from '@/assets/icon/access'
@@ -42,7 +43,7 @@ export function LoginPage() {
   }
 
   return (
-    <div className="bg-marketplace-shape-white m-6 rounded-4xl py-[72px] px-20 flex flex-col">
+    <div className="bg-marketplace-shape-white m-6 rounded-4xl p-10 lg:py-[72px] lg:px-20 flex flex-col">
       <div>
         <h1 className="font-title text-2xl leading-tight text-marketplace-gray-500">
           Acesse sua conta
@@ -95,13 +96,20 @@ export function LoginPage() {
         </Button>
       </form>
 
-      <div className="mt-auto space-y-5">
+      <div className="mt-5 lg:mt-auto space-y-5">
         <span className="text-marketplace-gray-300">
           Ainda não tem uma conta?
         </span>
-        <Button variant="outline" size="lg" className="justify-between w-full">
-          Cadastrar
-          <ArrowRightIcon className="w-6 text-marketplace-orange-base" />
+        <Button
+          variant="outline"
+          size="lg"
+          className="justify-between w-full"
+          asChild
+        >
+          <Link to="/register">
+            Cadastrar
+            <ArrowRightIcon className="w-6 text-marketplace-orange-base" />
+          </Link>
         </Button>
       </div>
     </div>

@@ -1,4 +1,7 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import { AccessIcon } from '@/assets/icon/access'
 import { ArrowRightIcon } from '@/assets/icon/arrow-right'
@@ -8,11 +11,34 @@ import { ViewOffIcon } from '@/assets/icon/view-off'
 import { Button } from '@/components/button'
 import * as Input from '@/components/input'
 
+const loginFormSchema = z.object({
+  email: z.string().email('Insira um e-mail válido'),
+  password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
+})
+
+type LoginFormData = z.infer<typeof loginFormSchema>
+
 export function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
 
   function toggleShowPassword() {
     setShowPassword((prev) => !prev)
+  }
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginFormSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  })
+
+  async function handleLogin(data: LoginFormData) {
+    console.log(data)
   }
 
   return (
@@ -26,29 +52,32 @@ export function LoginPage() {
         </span>
       </div>
 
-      <form className="flex flex-col gap-5 mt-12">
-        <Input.Control>
+      <form
+        className="flex flex-col gap-5 mt-12"
+        onSubmit={handleSubmit(handleLogin)}
+      >
+        <Input.Control error={errors.email?.message}>
           <Input.Label htmlFor="email">E-mail</Input.Label>
           <Input.Container>
             <Input.Icon icon={MailIcon} />
             <Input.Field
               type="email"
               id="email"
-              name="email"
               placeholder="Seu e-mail cadastrado"
+              {...register('email')}
             />
           </Input.Container>
         </Input.Control>
 
-        <Input.Control>
+        <Input.Control error={errors.password?.message}>
           <Input.Label htmlFor="password">Senha</Input.Label>
           <Input.Container>
             <Input.Icon icon={AccessIcon} />
             <Input.Field
               type={showPassword ? 'text' : 'password'}
               id="password"
-              name="password"
               placeholder="Sua senha de acesso"
+              {...register('password')}
             />
             <button type="button" onClick={toggleShowPassword}>
               {showPassword ? (
@@ -60,15 +89,17 @@ export function LoginPage() {
           </Input.Container>
         </Input.Control>
 
-        <Button size="lg" className="mt-12 justify-between">
+        <Button type="submit" size="lg" className="mt-12 justify-between">
           Acessar
           <ArrowRightIcon className="w-6 text-white" />
         </Button>
       </form>
 
-      <div className="mt-auto flex flex-col">
-        <span>Ainda não tem uma conta?</span>
-        <Button variant="outline" size="lg" className="justify-between">
+      <div className="mt-auto space-y-5">
+        <span className="text-marketplace-gray-300">
+          Ainda não tem uma conta?
+        </span>
+        <Button variant="outline" size="lg" className="justify-between w-full">
           Cadastrar
           <ArrowRightIcon className="w-6 text-marketplace-orange-base" />
         </Button>

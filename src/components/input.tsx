@@ -1,11 +1,27 @@
-import type { ComponentProps } from 'react'
+import { type ComponentProps, forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-type ControlProps = ComponentProps<'div'>
+import { AlertCircleIcon } from '@/assets/icon/alert-circle'
 
-function Control({ className, ...props }: ControlProps) {
+type ControlProps = ComponentProps<'div'> & {
+  error?: string
+}
+
+function Control({ className, error, children, ...props }: ControlProps) {
   return (
-    <div className={twMerge('group flex flex-col', className)} {...props} />
+    <div
+      data-with-error={!!error}
+      className={twMerge('group flex flex-col', className)}
+      {...props}
+    >
+      {children}
+      {error && (
+        <div className="flex items-center mt-2 gap-1">
+          <AlertCircleIcon className="size-4 text-marketplace-danger" />
+          <span className="text-xs text-marketplace-danger">{error}</span>
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -39,17 +55,22 @@ function Container({ className, ...props }: ContainerProps) {
 
 type FieldProps = ComponentProps<'input'>
 
-function Field({ className, ...props }: FieldProps) {
-  return (
-    <input
-      className={twMerge(
-        'w-full h-full outline-none p-0.5 placeholder:text-marketplace-gray-200 text-marketplace-gray-400',
-        className,
-      )}
-      {...props}
-    />
-  )
-}
+const Field = forwardRef(
+  ({ className, ...props }: FieldProps, ref: React.Ref<HTMLInputElement>) => {
+    return (
+      <input
+        className={twMerge(
+          'w-full h-full outline-none p-0.5 placeholder:text-marketplace-gray-200 text-marketplace-gray-400',
+          className,
+        )}
+        ref={ref}
+        {...props}
+      />
+    )
+  },
+)
+
+Field.displayName = 'Field'
 
 type IconProps = {
   icon: React.ElementType
@@ -60,7 +81,7 @@ function Icon({ icon: IconComponent, className }: IconProps) {
   return (
     <IconComponent
       className={twMerge(
-        'w-6 h-6 text-marketplace-gray-200 size-6 group-focus-within:text-marketplace-orange-base',
+        'w-6 h-6 text-marketplace-gray-200 size-6 group-focus-within:text-marketplace-orange-base group-data-[with-error=true]:text-marketplace-danger',
         className,
       )}
     />

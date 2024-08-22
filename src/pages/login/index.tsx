@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from '@/assets/icon/ArrowRight'
 import { Button } from '@/components/button'
 
 export function LoginPage() {
@@ -23,12 +24,18 @@ export function LoginPage() {
           <input type="password" id="password" name="password" />
         </div>
 
-        <Button className="mt-12">Acessar</Button>
+        <Button size="lg" className="mt-12 justify-between">
+          Acessar
+          <ArrowRightIcon className="w-6 text-white" />
+        </Button>
       </form>
 
       <div className="mt-auto flex flex-col">
         <span>Ainda não tem uma conta?</span>
-        <Button variant="outline">Cadastrar</Button>
+        <Button variant="outline" size="lg" className="justify-between">
+          Cadastrar
+          <ArrowRightIcon className="w-6 text-marketplace-orange-base" />
+        </Button>
       </div>
     </div>
   )

@@ -1,7 +1,20 @@
-import { ArrowRightIcon } from '@/assets/icon/ArrowRight'
+import { useState } from 'react'
+
+import { AccessIcon } from '@/assets/icon/access'
+import { ArrowRightIcon } from '@/assets/icon/arrow-right'
+import { MailIcon } from '@/assets/icon/mail'
+import { ViewIcon } from '@/assets/icon/view'
+import { ViewOffIcon } from '@/assets/icon/view-off'
 import { Button } from '@/components/button'
+import * as Input from '@/components/input'
 
 export function LoginPage() {
+  const [showPassword, setShowPassword] = useState(false)
+
+  function toggleShowPassword() {
+    setShowPassword((prev) => !prev)
+  }
+
   return (
     <div className="bg-marketplace-shape-white m-6 rounded-4xl py-[72px] px-20 flex flex-col">
       <div>
@@ -14,15 +27,38 @@ export function LoginPage() {
       </div>
 
       <form className="flex flex-col gap-5 mt-12">
-        <div className="flex flex-col">
-          <label htmlFor="email">E-mail</label>
-          <input type="email" id="email" name="email" />
-        </div>
+        <Input.Control>
+          <Input.Label htmlFor="email">E-mail</Input.Label>
+          <Input.Container>
+            <Input.Icon icon={MailIcon} />
+            <Input.Field
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Seu e-mail cadastrado"
+            />
+          </Input.Container>
+        </Input.Control>
 
-        <div className="flex flex-col">
-          <label htmlFor="password">Senha</label>
-          <input type="password" id="password" name="password" />
-        </div>
+        <Input.Control>
+          <Input.Label htmlFor="password">Senha</Input.Label>
+          <Input.Container>
+            <Input.Icon icon={AccessIcon} />
+            <Input.Field
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              name="password"
+              placeholder="Sua senha de acesso"
+            />
+            <button type="button" onClick={toggleShowPassword}>
+              {showPassword ? (
+                <ViewOffIcon className="text-marketplace-gray-300 size-6" />
+              ) : (
+                <ViewIcon className="text-marketplace-gray-300 size-6" />
+              )}
+            </button>
+          </Input.Container>
+        </Input.Control>
 
         <Button size="lg" className="mt-12 justify-between">
           Acessar

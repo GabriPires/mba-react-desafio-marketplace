@@ -7,12 +7,12 @@ const button = tv({
   variants: {
     variant: {
       primary:
-        'bg-marketplace-orange-base text-white hover:bg-marketplace-orange-base/90',
+        'bg-marketplace-orange-base text-white hover:bg-marketplace-orange-dark',
       outline:
-        'bg-transparent border border-marketplace-orange-base text-marketplace-orange-base hover:bg-marketplace-orange-base/10',
+        'bg-transparent border border-marketplace-orange-base text-marketplace-orange-base hover:border-marketplace-orange-dark hover:text-marketplace-orange-dark',
     },
     size: {
-      md: 'h-12',
+      md: 'h-10',
       lg: 'h-14',
     },
   },

@@ -6,7 +6,7 @@ export function MainLayout() {
   return (
     <div>
       <Header />
-      <main className="max-w-[1030px] mx-auto mt-16">
+      <main className="max-w-[1030px] mx-auto">
         <Outlet />
       </main>
     </div>

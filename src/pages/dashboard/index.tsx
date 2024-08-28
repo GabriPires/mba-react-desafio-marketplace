@@ -3,22 +3,19 @@ import { SaleTagIcon } from '@/assets/icon/sale-tag'
 import { StoreIcon } from '@/assets/icon/store'
 import { UserMultipleIcon } from '@/assets/icon/user-multiple'
 import { Card } from '@/components/card'
+import { PageTitle } from '@/components/page-title'
 
 import { StatsCard } from './components/stats-card'
 
 export function DashboardPage() {
   return (
     <div>
-      <div className="flex flex-col">
-        <span className="font-title text-marketplace-gray-500 text-2xl leading-tight">
-          Últimos 30 dias
-        </span>
-        <span className="text-sm text-marketplace-gray-300">
-          Confira as estatísticas da sua loja no último mês
-        </span>
-      </div>
+      <PageTitle
+        title="Últimos 30 dias"
+        subtitle="Confira as estatísticas da sua loja no último mês"
+      />
 
-      <div className="grid grid-cols-4 gap-6 mt-10">
+      <div className="grid grid-cols-4 gap-6">
         <div className="flex flex-col gap-4">
           <StatsCard icon={SaleTagIcon} label="Produtos vendidos" value={24} />
           <StatsCard icon={StoreIcon} label="Produtos anunciados" value={56} />
@@ -29,7 +26,7 @@ export function DashboardPage() {
           />
         </div>
 
-        <Card>
+        <Card className="col-span-3">
           <div className="flex justify-between">
             <span className="font-title text-marketplace-gray-500 text-lg">
               Visitantes

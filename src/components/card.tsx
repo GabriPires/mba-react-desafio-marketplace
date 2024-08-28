@@ -1,13 +1,24 @@
-import type { ComponentProps } from 'react'
+import type {
+  ComponentProps,
+  ComponentPropsWithoutRef,
+  ElementType,
+} from 'react'
 import { twMerge } from 'tailwind-merge'
 
-type CardProps = ComponentProps<'div'>
+type CardProps<T extends ElementType> = ComponentProps<'div'> & {
+  as?: T
+} & ComponentPropsWithoutRef<T>
 
-export function Card({ className, ...props }: CardProps) {
+export const Card = <T extends ElementType = 'div'>({
+  as: Component = 'div' as T,
+  className = '',
+  ...props
+}: CardProps<T>) => {
   return (
-    <div
+    // @ts-expect-error is everything ok here
+    <Component
       className={twMerge(
-        'bg-marketplace-shape-white p-6 col-span-3 rounded-card',
+        'bg-marketplace-shape-white p-6 rounded-card overflow-hidden',
         className,
       )}
       {...props}

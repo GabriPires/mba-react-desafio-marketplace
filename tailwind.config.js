@@ -1,14 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       borderRadius: {
         '4xl': '2rem',
         button: '10px',
+        card: '20px',
       },
       backgroundImage: {
         hero: 'url("/src/assets/background.png")',
@@ -16,6 +14,9 @@ export default {
       fontFamily: {
         sans: 'Poppins, sans-serif',
         title: 'DM Sans, sans-serif',
+      },
+      fontSize: {
+        xxs: '0.625rem', // 10px
       },
       colors: {
         marketplace: {
@@ -44,7 +45,6 @@ export default {
           success: '#28A745',
         },
       },
-
     },
   },
   plugins: [],

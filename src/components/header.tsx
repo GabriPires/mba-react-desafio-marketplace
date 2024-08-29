@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom'
+
 import { CharHistogramIcon } from '@/assets/icon/chart-histogram'
 import { PackageIcon } from '@/assets/icon/package'
 import { PlusSignIcon } from '@/assets/icon/plus-sign'
@@ -7,6 +9,12 @@ import { Button } from './button'
 import { NavLink } from './nav-link'
 
 export function Header() {
+  const navigate = useNavigate()
+
+  function handleNavigateToNewProduct() {
+    navigate('/products/new')
+  }
+
   return (
     <header className="flex justify-between px-5 py-4 border-b border-marketplace-shape-shape">
       <img src={logoImg} alt="Logotipo do marketplace" className="w-14" />
@@ -17,7 +25,7 @@ export function Header() {
       </nav>
 
       <div className="flex items-center gap-4">
-        <Button>
+        <Button onClick={handleNavigateToNewProduct}>
           <PlusSignIcon className="size-5 mr-2" />
           Novo produto
         </Button>

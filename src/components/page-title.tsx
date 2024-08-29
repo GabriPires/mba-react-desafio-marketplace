@@ -1,11 +1,14 @@
+import { twMerge } from 'tailwind-merge'
+
 interface PageTitleProps {
   title: string
   subtitle: string
+  className?: string
 }
 
-export function PageTitle({ title, subtitle }: PageTitleProps) {
+export function PageTitle({ title, subtitle, className }: PageTitleProps) {
   return (
-    <div className="flex flex-col mb-10 mt-16">
+    <div className={twMerge('flex flex-col mb-10 mt-16', className)}>
       <span className="font-title text-marketplace-gray-500 text-2xl leading-tight">
         {title}
       </span>

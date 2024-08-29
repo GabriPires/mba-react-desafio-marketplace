@@ -61,8 +61,9 @@ function Trigger({
 }: TriggerProps) {
   return (
     <Select.Trigger
+      data-with-icon={!!Icon}
       className={twMerge(
-        'grid grid-cols-[auto_1fr_auto] items-center text-left h-12 border-b border-marketplace-gray-100 gap-2 outline-none data-[placeholder]:text-marketplace-gray-200',
+        'grid grid-cols-[1fr_auto] data-[with-icon=true]:grid-cols-[auto_1fr_auto] items-center text-left h-12 border-b border-marketplace-gray-100 gap-2 outline-none data-[placeholder]:text-marketplace-gray-200',
         className,
       )}
       {...props}

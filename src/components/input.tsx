@@ -45,7 +45,7 @@ function Container({ className, ...props }: ContainerProps) {
   return (
     <div
       className={twMerge(
-        'flex items-center h-12 border-b border-marketplace-gray-100 gap-2',
+        'flex items-center border-b border-marketplace-gray-100 gap-2',
         className,
       )}
       {...props}
@@ -60,7 +60,7 @@ const Field = forwardRef(
     return (
       <input
         className={twMerge(
-          'w-full h-full outline-none p-0.5 placeholder:text-marketplace-gray-200 text-marketplace-gray-400',
+          'w-full h-12 outline-none p-0.5 placeholder:text-marketplace-gray-200 text-marketplace-gray-400',
           className,
         )}
         ref={ref}
@@ -71,6 +71,28 @@ const Field = forwardRef(
 )
 
 Field.displayName = 'Field'
+
+type TextareaProps = ComponentProps<'textarea'>
+
+const Textarea = forwardRef(
+  (
+    { className, ...props }: TextareaProps,
+    ref: React.Ref<HTMLTextAreaElement>,
+  ) => {
+    return (
+      <textarea
+        className={twMerge(
+          'w-full h-full min-h-[78px] outline-none p-0.5 pt-3 placeholder:text-marketplace-gray-200 text-marketplace-gray-400 resize-none',
+          className,
+        )}
+        ref={ref}
+        {...props}
+      />
+    )
+  },
+)
+
+Textarea.displayName = 'Textarea'
 
 type IconProps = {
   icon: React.ElementType
@@ -88,4 +110,4 @@ function Icon({ icon: IconComponent, className }: IconProps) {
   )
 }
 
-export { Control, Container, Field, Label, Icon }
+export { Control, Container, Field, Textarea, Label, Icon }

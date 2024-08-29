@@ -11,6 +11,7 @@ const button = tv({
         'bg-marketplace-orange-base text-white hover:bg-marketplace-orange-dark',
       outline:
         'bg-transparent border border-marketplace-orange-base text-marketplace-orange-base hover:border-marketplace-orange-dark hover:text-marketplace-orange-dark',
+      link: 'bg-transparent text-marketplace-orange-base hover:text-marketplace-orange-dark p-0',
     },
     size: {
       md: 'h-10',

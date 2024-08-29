@@ -18,6 +18,9 @@ export default {
       fontSize: {
         xxs: '0.625rem', // 10px
       },
+      boxShadow: {
+        select: '0px 2px 24px #F5EAEA',
+      },
       colors: {
         marketplace: {
           orange: {

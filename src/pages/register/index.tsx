@@ -6,6 +6,7 @@ import { z } from 'zod'
 
 import { AccessIcon } from '@/assets/icon/access'
 import { ArrowRightIcon } from '@/assets/icon/arrow-right'
+import { ImageUploadIcon } from '@/assets/icon/image-upload'
 import { MailIcon } from '@/assets/icon/mail'
 import { ViewIcon } from '@/assets/icon/view'
 import { ViewOffIcon } from '@/assets/icon/view-off'
@@ -72,6 +73,16 @@ export function RegisterPage() {
           <h2 className="text-marketplace-gray-500 font-title text-lg font-bold leading-tight">
             Perfil
           </h2>
+
+          <div>
+            <input id="avatar" type="file" className="sr-only" />
+            <label
+              htmlFor="avatar"
+              className="flex items-center justify-center size-[120px] rounded-xl bg-marketplace-shape-shape cursor-pointer"
+            >
+              <ImageUploadIcon className="text-marketplace-orange-base size-8" />
+            </label>
+          </div>
 
           <Input.Control error={errors.name?.message}>
             <Input.Label htmlFor="name">Nome</Input.Label>

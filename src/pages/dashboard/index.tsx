@@ -1,3 +1,8 @@
+import { useQuery } from '@tanstack/react-query'
+
+import { getProductsAvailableOnLastMonth } from '@/api/metrics/products-available-on-last-month'
+import { getProductsSoldOnLastMonth } from '@/api/metrics/products-sold-on-last-month'
+import { getViewsOnLastMonth } from '@/api/metrics/views-on-last-month'
 import { CalendarIcon } from '@/assets/icon/calendar'
 import { SaleTagIcon } from '@/assets/icon/sale-tag'
 import { StoreIcon } from '@/assets/icon/store'
@@ -6,8 +11,24 @@ import { Card } from '@/components/card'
 import { PageTitle } from '@/components/page-title'
 
 import { StatsCard } from './components/stats-card'
+import { ViewsPerDayOnMonthGraphic } from './components/views-per-day-on-month-graphic'
 
 export function DashboardPage() {
+  const { data: viewsOnLastMonthData } = useQuery({
+    queryKey: ['views-on-last-month'],
+    queryFn: getViewsOnLastMonth,
+  })
+
+  const { data: productsSoldOnLastMonthData } = useQuery({
+    queryKey: ['products-sold-on-last-month'],
+    queryFn: getProductsSoldOnLastMonth,
+  })
+
+  const { data: productsAvailableOnLastMonthData } = useQuery({
+    queryKey: ['products-available-on-last-month'],
+    queryFn: getProductsAvailableOnLastMonth,
+  })
+
   return (
     <div>
       <PageTitle
@@ -17,12 +38,20 @@ export function DashboardPage() {
 
       <div className="grid grid-cols-4 gap-6">
         <div className="flex flex-col gap-4">
-          <StatsCard icon={SaleTagIcon} label="Produtos vendidos" value={24} />
-          <StatsCard icon={StoreIcon} label="Produtos anunciados" value={56} />
+          <StatsCard
+            icon={SaleTagIcon}
+            label="Produtos vendidos"
+            value={productsSoldOnLastMonthData?.amount ?? 0}
+          />
+          <StatsCard
+            icon={StoreIcon}
+            label="Produtos anunciados"
+            value={productsAvailableOnLastMonthData?.amount ?? 0}
+          />
           <StatsCard
             icon={UserMultipleIcon}
             label="Pessoas visitantes"
-            value={1238}
+            value={viewsOnLastMonthData?.amount ?? 0}
           />
         </div>
 
@@ -38,7 +67,7 @@ export function DashboardPage() {
               </span>
             </div>
           </div>
-          <div className="h-[266px] w-[719px]"></div>
+          <ViewsPerDayOnMonthGraphic />
         </Card>
       </div>
     </div>

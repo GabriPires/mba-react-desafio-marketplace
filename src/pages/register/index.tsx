@@ -14,10 +14,23 @@ import { Button } from '@/components/button'
 import * as Input from '@/components/input'
 import { phoneMask } from '@/utils/phone-mask'
 
+const ACCEPTED_FILE_TYPES = ['image/jpeg', 'image/png']
+
 const registerFormSchema = z
   .object({
     name: z.string().min(1, 'Insira seu nome'),
     phone: z.string().min(1, 'Insira seu telefone'),
+    avatar: z
+      .custom<FileList>()
+      // .refine((files) => {
+      //   return Array.from(files ?? []).length !== 0
+      // })
+      .refine((files) => {
+        return Array.from(files ?? []).every((file) =>
+          ACCEPTED_FILE_TYPES.includes(file.type),
+        )
+      }, 'Tipo de arquivo precisa ser PNG ou JPEG')
+      .nullish(),
     email: z.string().email('Insira um e-mail válido'),
     password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
     confirmPassword: z
@@ -33,20 +46,36 @@ type RegisterFormData = z.infer<typeof registerFormSchema>
 
 export function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
+  const [avatarPreview, setAvatarPreview] = useState<string | undefined>(
+    undefined,
+  )
 
   function toggleShowPassword() {
     setShowPassword((prev) => !prev)
   }
 
+  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0]
+    if (file) {
+      const imageUrl = URL.createObjectURL(file)
+      setAvatarPreview(imageUrl)
+    }
+  }
+
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
+      name: '',
       email: '',
+      phone: '',
+      avatar: undefined,
       password: '',
+      confirmPassword: '',
     },
   })
 
@@ -74,14 +103,41 @@ export function RegisterPage() {
             Perfil
           </h2>
 
-          <div>
-            <input id="avatar" type="file" className="sr-only" />
-            <label
-              htmlFor="avatar"
-              className="flex items-center justify-center size-[120px] rounded-xl bg-marketplace-shape-shape cursor-pointer"
-            >
-              <ImageUploadIcon className="text-marketplace-orange-base size-8" />
-            </label>
+          <div className="flex flex-col items-start">
+            <input
+              id="avatar"
+              type="file"
+              className="sr-only"
+              {...register('avatar', {
+                onChange: handleImageChange,
+              })}
+            />
+            {avatarPreview ? (
+              <div className="flex flex-col items-center">
+                <img
+                  src={avatarPreview}
+                  alt="Prévia do avatar do usuário"
+                  className="size-[120px] object-cover rounded-xl"
+                />
+                <Button
+                  variant="link"
+                  className="text-xs"
+                  onClick={() => {
+                    setAvatarPreview(undefined)
+                    setValue('avatar', undefined)
+                  }}
+                >
+                  Remover foto
+                </Button>
+              </div>
+            ) : (
+              <label
+                htmlFor="avatar"
+                className="flex items-center justify-center rounded-xl size-[120px] bg-marketplace-shape-shape cursor-pointer"
+              >
+                <ImageUploadIcon className="text-marketplace-orange-base size-8" />
+              </label>
+            )}
           </div>
 
           <Input.Control error={errors.name?.message}>

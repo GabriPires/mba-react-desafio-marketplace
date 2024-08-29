@@ -1,9 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
+import { authenticate } from '@/api/sessions/authenticate'
 import { AccessIcon } from '@/assets/icon/access'
 import { ArrowRightIcon } from '@/assets/icon/arrow-right'
 import { MailIcon } from '@/assets/icon/mail'
@@ -22,6 +24,8 @@ type LoginFormData = z.infer<typeof loginFormSchema>
 export function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
 
+  const navigate = useNavigate()
+
   function toggleShowPassword() {
     setShowPassword((prev) => !prev)
   }
@@ -38,8 +42,17 @@ export function LoginPage() {
     },
   })
 
+  const { mutateAsync: login, isPending: isLoadingLogin } = useMutation({
+    mutationFn: async ({ email, password }: LoginFormData) => {
+      await authenticate({ email, password })
+    },
+    onSuccess: () => {
+      navigate('/dashboard')
+    },
+  })
+
   async function handleLogin(data: LoginFormData) {
-    console.log(data)
+    await login(data)
   }
 
   return (
@@ -90,7 +103,12 @@ export function LoginPage() {
           </Input.Container>
         </Input.Control>
 
-        <Button type="submit" size="lg" className="mt-12 justify-between">
+        <Button
+          type="submit"
+          size="lg"
+          className="mt-12 justify-between"
+          disabled={isLoadingLogin}
+        >
           Acessar
           <ArrowRightIcon className="w-6 text-white" />
         </Button>

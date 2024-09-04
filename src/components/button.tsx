@@ -4,14 +4,14 @@ import { twMerge } from 'tailwind-merge'
 import { tv, type VariantProps } from 'tailwind-variants'
 
 const button = tv({
-  base: 'flex items-center justify-center px-5 rounded-button font-medium cursor-pointer transition-colors',
+  base: 'flex items-center justify-center px-5 rounded-button font-medium cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed',
   variants: {
     variant: {
       primary:
-        'bg-marketplace-orange-base text-white hover:bg-marketplace-orange-dark',
+        'bg-marketplace-orange-base text-white enabled:hover:bg-marketplace-orange-dark',
       outline:
-        'bg-transparent border border-marketplace-orange-base text-marketplace-orange-base hover:border-marketplace-orange-dark hover:text-marketplace-orange-dark',
-      link: 'bg-transparent text-marketplace-orange-base hover:text-marketplace-orange-dark p-0',
+        'bg-transparent border border-marketplace-orange-base text-marketplace-orange-base enabled:hover:border-marketplace-orange-dark enabled:hover:text-marketplace-orange-dark',
+      link: 'bg-transparent text-marketplace-orange-base enabled:hover:text-marketplace-orange-dark p-0',
     },
     size: {
       md: 'h-10',

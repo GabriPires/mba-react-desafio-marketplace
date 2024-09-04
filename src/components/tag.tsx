@@ -6,9 +6,9 @@ const tag = tv({
   base: 'bg-marketplace-gray-400 rounded-full px-2 py-1',
   variants: {
     variant: {
-      announced: 'bg-marketplace-blue-dark',
+      available: 'bg-marketplace-blue-dark',
       sold: 'bg-marketplace-success',
-      inactive: 'bg-marketplace-gray-300',
+      cancelled: 'bg-marketplace-gray-300',
     },
   },
 })

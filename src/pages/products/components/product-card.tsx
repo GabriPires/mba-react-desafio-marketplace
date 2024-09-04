@@ -1,40 +1,48 @@
 import { Link } from 'react-router-dom'
 
+import { ProductProps } from '@/api/products/get-products'
 import { Card } from '@/components/card'
 import { Tag } from '@/components/tag'
 
-export function ProductCard() {
+interface ProductCardProps {
+  product: ProductProps
+}
+
+enum Status {
+  available = 'Anunciado',
+  cancelled = 'Não Disponível',
+  sold = 'Vendido',
+}
+
+export function ProductCard({ product }: ProductCardProps) {
   return (
-    <Link to={`/products/1`}>
+    <Link to={`/products/${product.id}`}>
       <Card className="p-1 relative">
         <div className="absolute flex gap-1 top-3 right-3">
-          <Tag value="Anunciado" variant="announced" />
-          <Tag value="Móvel" />
+          <Tag value={Status[product.status]} variant={product.status} />
+          <Tag value={product.category.title} />
         </div>
         <img
-          src="https://plus.unsplash.com/premium_photo-1681449856688-2abd99ab5a73?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src={product.attachments[0].url}
           alt="Foto do produto"
           className="rounded-2xl w-full h-[144px] object-cover"
         />
         <div className="p-3 pt-0">
           <div className="flex items-center justify-between mt-4">
             <span className="text-marketplace-gray-400 font-semibold leading-tight">
-              Sofá
+              {product.title}
             </span>
             <span>
               <span className="text-marketplace-gray-500 text-xs font-medium leading-tight mr-1">
                 R$
               </span>
               <span className="text-marketplace-gray-500 font-title text-lg font-bold leading-tight">
-                1.200,90
+                {Number(product.priceInCents / 100).toLocaleString()}
               </span>
             </span>
           </div>
           <span className="text-marketplace-gray-300 text-sm leading-tight line-clamp-2 mt-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-            unde est animi id debitis vel hic reiciendis beatae. Dolore officia
-            minus, ex odit animi dignissimos ipsum error ducimus esse
-            repudiandae?
+            {product.description}
           </span>
         </div>
       </Card>
